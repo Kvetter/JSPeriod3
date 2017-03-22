@@ -64,7 +64,6 @@ describe("Jokes API", function () {
       fetch(URL, {method: 'get'}).then(function (response) {
         return response.json();
       }).then(res => {
-        console.log(res);
         expect(res.length).to.be.equal(2);
         expect(res[0]._id).to.be.equal("5063114bd386d8fadbd6b004");
         expect(res[1]._id).to.be.equal("5063114bd386d8fadbd6b005");
@@ -145,8 +144,10 @@ describe("Jokes API", function () {
         expect(response.status).to.be.equal(204);
         //Verify that it was actually removed
         fetch(URL, {method: 'get'}).then(function (response) {
+          console.log(response);
           return response.json();
         }).then(res => {
+          console.log(res);
           expect(res.length).to.be.equal(1);
           done()
         });

@@ -10,7 +10,7 @@ Add Schema and Middleware here
 
 var JokeSchema = new Schema({
   joke: { type: String, required: true },
-  category: { type: String, enum: ["short", "alcohol", "quote"]},
+  category: { type: String, enum: ["short", "alcohol", "quote", "general"]},
   reference: { author: String, link: String },
   lastEdited: { type: Date, default: Date.now }
 }); 

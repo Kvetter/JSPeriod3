@@ -4,39 +4,57 @@ let jokes = require("../models/Jokes");
 let joke = mongoose.model("Joke");
 
 
+
 router.get("/jokes", (req, res) => {
-  res.json({
-    jokes: joke.find({}, function (err, jokes) {
-      if (err) throw err;
 
-      console.log(jokes);
-    })
+  joke.find({}, (err, jokes) => {
+    if (err) throw err;
+
+    res.json(jokes);
+
+  })
+});
+
+router.get("/jokes/:id", (req, res) => {
+
+  joke.findOne({ _id: req.params.id }, (err, joke) => {
+    if (err) throw err;
+
+    res.json(joke);
+  })
+});
+
+router.post("/jokes", (req, res) => {
+
+  // Should work but doesn't, no idea why :/
+  joke.create(req.body, function (err, joke) {
+
+    if (err) throw err;
+
+    res.json(joke);
   });
+
 });
 
-router.get("/api/jokes/:id", (req, res) => {
-  res.json({ joke: Joke.find({ id: id }) });
+router.put("/jokes/:id", (req, res) => {
+
+  joke.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, (err, joke) => {
+    if (err) throw err;
+
+    res.json(joke);
+  })
+
 });
 
-router.post("/api/jokes/:joke/:cat/:ref", (req, res) => {
-  res.json({
-    joke: joke.create({
-      joke: joke,
-      category: cat,
-      reference: ref,
-    }, function (err, joke) {
-      if (!err) {
-        console.log("Joke " + joke._id + " saved");
-      }
-    })
+router.delete("/jokes/:id", (req, res) => {
+
+  console.log(req.params.id);
+  joke.findOneAndRemove({ _id: req.params.id }, (err, joke) => {
+
+    if (err) throw err;
+
+    res.json(joke);
   });
-});
-
-router.put("/api/jokes/:id", (req, res) => {
-
-});
-
-router.delete("/api/jokes/:id", (req, res) => {
 
 });
 

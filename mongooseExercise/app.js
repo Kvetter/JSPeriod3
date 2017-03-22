@@ -1,13 +1,24 @@
 let express = require("express");
 let app = express();
+var path = require('path');
 let bodyParser = require("body-parser");
 let logger = require('morgan');
 let api = require("./api/api");
+let index = require("./routes/index");
+
+
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
+
 app.set("json spaces", 2);
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use("/", index);
 app.use("/api",api);
 
 
